@@ -117,8 +117,6 @@ char	*handle_expand(char *prompt, t_env *env)
 	char	*res;
 	int		i;
 	int		j;
-	//char	*env_var_value;
-	//char	*word;
 
 	i = 0;
 	j = 0;

@@ -132,6 +132,7 @@ char	*extract_word(char *str);
 //check_syntax.c
 int	check_quotes(char *prompt);
 int	check_syntax(char *prompt);
+int	check_payload(t_exec **exec);
 //utils.c
 void free_array(char **array);
 int	is_in_quotes(char *cmd, int i);

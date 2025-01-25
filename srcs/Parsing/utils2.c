@@ -63,17 +63,17 @@ char	*ft_strcat(char *dest, const char *src)
 	return (dest);
 }
 
-/*
-char	*ft_triming(char *cmd)
+
+/*char	*ft_triming(char *cmd)
 {
 	char	*res;
 	int	i;
 
 	i = 0;
-	res = ft_strtrim(cmd, " ");
+	res = malloc(sizeof(char) * ft_strlen(cmd));
 	while (res[i])
 	{
-		if (is_in_quotes(cmd, i))
+		if (is_in_quotes(cmd, i) != 0)
 		{
 			
 		
@@ -82,6 +82,48 @@ char	*ft_triming(char *cmd)
 	res = ft_strtrim(cmd, " ");
 	return (res);
 }*/
+
+char	*remove_quotes(char *prompt)
+{
+	char	*res;
+	int	i;
+	int	j;
+	int	quote_count;
+	int	in_quotes;
+	
+	i = 0;
+	j = 0;
+	in_quotes = 0;
+	quote_count = 0;
+	while (prompt[i])
+	{
+		if (prompt[i] == '\'' || prompt[i] == '\"')
+			quote_count++;
+		i++;
+	}
+	res = malloc(sizeof(char) * (ft_strlen(prompt) + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (prompt[i])
+	{
+		if ((prompt[i] == '\'' || prompt[i] == '\"') && in_quotes == 0)
+			in_quotes = prompt[i];
+		else if (prompt[i] == in_quotes)
+			in_quotes = 0;
+		else
+			res[j++] = prompt[i];
+		i++;
+	}
+	/*if (j < (int)(ft_strlen(prompt) - quote_count))
+		res[j] = '\0';
+	else*/
+	res[j] = '\0';
+	//free(prompt);
+	printf("res:%s\n",res);
+	return (res);
+}
+
 
 char	*get_command(char *cmd, int *i, t_env *env)
 {
@@ -101,15 +143,15 @@ char	*get_command(char *cmd, int *i, t_env *env)
 	if (ft_isspace(cmd[j]) && is_in_quotes(cmd, (j)))
 	{
 		j = has_quote(cmd, j);
-		tmp = ft_substr(cmd, (*i), j);
-		res = ft_strtrim(tmp, " ");
+		tmp = ft_substr(cmd, (*i), j + 1);
+		//printf("cmd dans get command:%s\n",tmp);
+		res = remove_quotes(tmp);
 		(*i) = j;
 		free(tmp);
 		return (res);
 	}
 	tmp = ft_substr(cmd, (*i), j);
-	res = ft_strtrim(tmp, " ");
-	printf("res:%s\n",res);
+	res = remove_quotes(tmp);
 	free(tmp);
 	return (res);
 }

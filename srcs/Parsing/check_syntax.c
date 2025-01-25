@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+int	check_payload(t_exec **exec)
+{
+	t_exec	*nav;
+
+	nav = *exec;
+	while (nav)
+	{
+		if (nav->redirection_list && (!nav->redirection_list->payload
+				|| (nav->redirection_list->payload[0] == '\0'
+					&& !nav->redirection_list->not_null)))
+			return (0);
+		nav = nav->next;
+	}
+	return (1);
+}
+
 int	check_space_between_pipes(char *prompt)
 {
 	int	i;

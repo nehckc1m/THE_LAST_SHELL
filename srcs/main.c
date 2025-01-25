@@ -74,7 +74,7 @@ int	read_prompt(t_env *env)
 	}
 }
 
-/*void	print_command_list(t_exec *command)
+void	print_command_list(t_exec *command)
 {
 	int i = -1;
 	while (command)
@@ -90,7 +90,7 @@ int	read_prompt(t_env *env)
 		command = command->next;
 	}
 	printf("print cmmand list done\n");
-}*/
+}
 
 int	check_payload(t_exec **exec)
 {
@@ -116,8 +116,12 @@ static int	parsing_prompt(char *prompt, t_env *env)
 	if (check_syntax(prompt))
 		return (0);
 	command_list = split_prompt(prompt, '|', env);
-	//if (check_payload(&command_list), 0)
-	//	return (0);
+	print_command_list(command_list);
+	if (check_payload(&command_list), 0)
+	{
+		free_exec_list(&command_list);
+		return (0);
+	}
 	ft_exec(command_list, env);
 	free_exec_list(&command_list);
 	return (1);
