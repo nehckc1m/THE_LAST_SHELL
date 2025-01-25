@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -105,72 +104,77 @@ typedef struct s_exec_list
 	t_redirection		*redirec_list;
 }				t_exec_list;
 
-
 //ft_expand.c
-void	ft_expand(char **res, t_env *env, int *i, int *j, char *prompt);
-void	ft_expand_alloc(t_env *env, int *i, int *j, char *str);
-void	search_exit_status_alloc(t_env *env, int *i, int *j);
-void	search_exit_status(t_env *env, int *i, int *j, char **res);
+void						ft_expand(char **res, char **env_var_value, int *i, int *j);
+void						ft_expand_alloc(t_env *env, int *i, \
+						int *j, char *str);
+void						search_exit_status_alloc(t_env *env, \
+						int *i, int *j);
+void						search_exit_status(t_env *env, int *i, \
+						int *j, char **res);
 //signal_handler.c
-void	signal_listener(int sig_state);
-
+void						signal_listener(int sig_state);
 
 //env.c
-t_env	*list_env(char **env);
+t_env						*list_env(char **env);
 //t_env	*export_env(t_shell *shell, char **env_var);
-void free_env_list(t_env *env_list);
-void	print_list(t_env *list_env);
+void						free_env_list(t_env *env_list);
+void						print_list(t_env *list_env);
 //commands.c
 //void	commands(t_shell *shell);
 
 /*	split_prompt.c	*/
-t_exec	*split_prompt(char const *prompt, char c, t_env *env);
+t_exec						*split_prompt(char const *prompt, \
+						char c, t_env *env);
 
 //export.c
-t_env *sort_env(t_env *env, t_env *copy);
+t_env						*sort_env(t_env *env, t_env *copy);
 //echo.c
-char	*get_env_value(char **env, char *var);
-char	*extract_word(char *str);
+char						*get_env_value(char **env, char *var);
+char						*extract_word(char *str);
 //check_syntax.c
-int	check_quotes(char *prompt);
-int	check_syntax(char *prompt);
-int	check_payload(t_exec **exec);
+int							check_quotes(char *prompt);
+int							check_syntax(char *prompt);
+int							check_payload(t_exec **exec);
 //utils.c
-void free_array(char **array);
-int	is_in_quotes(char *cmd, int i);
-int	has_quote(char *prompt, int j);
-char	*handle_expand(char *prompt, t_env *env);
+void						free_array(char **array);
+int							is_in_quotes(char *cmd, int i);
+int							has_quote(char *prompt, int j);
+char						*handle_expand(char *prompt, t_env *env);
 //               utils2.c
-char	*get_command(char *cmd, int *i, t_env *env);
-char	**get_option(char *cmd, int *i, t_env *env);
-char	*ft_strcat(char *dest, const char *src);
-t_redirection	*get_redirection(char *cmd);
+char						*get_command(char *cmd, int *i, t_env *env);
+char						**get_option(char *cmd, int *i, t_env *env);
+char						*ft_strcat(char *dest, const char *src);
+t_redirection				*get_redirection(char *cmd);
 //	utils3.c
-int	ft_isspace(int c);
-int	ft_strcmp(char *s1, char *s2);
-char	*ft_strndup(const char *s, size_t n);
-void	free_array(char **array);
-char	*extract_word(char *str);
+int							ft_isspace(int c);
+int							ft_strcmp(char *s1, char *s2);
+char						*ft_strndup(const char *s, size_t n);
+void						free_array(char **array);
+char						*extract_word(char *str);
 //	node_utils.c
-t_exec	*create_new_node(void);
+t_exec						*create_new_node(void);
 //	redirection_list.c
-t_redirection	*redirection_list_new_node(void);
-t_redirection	*redirection_list_last(t_redirection *lst);
-t_redirection	*redirection_list_add_back(t_redirection *exec, t_redirection *neww);
+t_redirection				*redirection_list_new_node(void);
+t_redirection				*redirection_list_last(t_redirection *lst);
+t_redirection				*redirection_list_add_back(t_redirection *exec, \
+					t_redirection *neww);
 //	redirection_utils.c
-void	exec_trim(char **line, char **res, int *i, int j);
-void	trim_redirections(char **line);
-void	pass_redirection_and_payload(char **line, int *i);
-int	fill_redirection(t_redirection *redirection_list, char *instruction_line);
-int	fill_payload(t_redirection *tmp, char *instruction_line);
+void						exec_trim(char **line, char **res, int *i, int j);
+void						trim_redirections(char **line);
+void						pass_redirection_and_payload(char **line, int *i);
+int							fill_redirection(t_redirection *redirection_list, \
+								char *instruction_line);
+int							fill_payload(t_redirection *tmp, \
+								char *instruction_line);
 //	redirection_utils2.c
-void	trim_payload_quotes(char *option);
-void	shift_str(char *str, int length);
+void						trim_payload_quotes(char *option);
+void						shift_str(char *str, int length);
 //	ft_free.c
-void	free_env(t_env *copy);
-void	free_exec_list(t_exec **exec);
-void	free_redirection_list(t_redirection **list);
-void	free_readline(void);
+void						free_env(t_env *copy);
+void						free_exec_list(t_exec **exec);
+void						free_redirection_list(t_redirection **list);
+void						free_readline(void);
 
 /* builtin */
 void						ft_echo(t_exec_list *exec);
@@ -267,7 +271,5 @@ int							check_builtin(t_exec_list *exec);
 char						**get_args(t_exec *exec);
 void						replace_abs_path(char	**str, t_env_list **env);
 t_exec_list					*verif_exec(t_exec_list	*exec, t_env_list **env);
-
-
 
 #endif

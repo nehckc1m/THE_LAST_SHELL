@@ -44,7 +44,6 @@ t_exec	*filling_node(t_exec *current, char *cmd, t_env *env)
 	if (current->redirection_list)
 		trim_redirections(&cmd);
 	current->cmd = get_command(tmp, &i, env);
-	//i = ft_strlen(current->cmd);
 	current->option = get_option(tmp, &i, env);
 	free(tmp);
 	return (current);

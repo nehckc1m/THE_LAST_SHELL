@@ -56,15 +56,9 @@ int	read_prompt(t_env *env)
 		signal_listener(0);
 		prompt = readline("minihell>");
 		if (!prompt)
-		{
-			free_env(env);
-			free_readline();
-			//free(prompt);
-			free_all_exit(NULL, env->head, -1);
-			del_curr_heredoc();
-			printf("exit\n");
-			return (0);
-		}
+			return (free_all_exit(NULL, env->head, -1), \
+				free_readline(), free_env(env), del_curr_heredoc(), \
+				printf("exit\n"), 0);
 		else if (prompt && prompt[0] != '\0')
 		{
 			add_history(prompt);
@@ -96,7 +90,7 @@ int	read_prompt(t_env *env)
 	}
 	printf("print cmmand list done\n");
 }*/
-
+	//print_command_list(command_list);
 static int	parsing_prompt(char *prompt, t_env *env)
 {
 	t_exec	*command_list;
@@ -105,7 +99,6 @@ static int	parsing_prompt(char *prompt, t_env *env)
 	if (check_syntax(prompt))
 		return (0);
 	command_list = split_prompt(prompt, '|', env);
-	//print_command_list(command_list);
 	if (check_payload(&command_list), 0)
 	{
 		free_exec_list(&command_list);

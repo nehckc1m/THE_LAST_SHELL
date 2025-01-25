@@ -22,7 +22,6 @@ t_exec	*create_new_node(void)
 	new->redirection_list = NULL;
 	new->cmd = NULL;
 	new->option = NULL;
-	new->next = NULL;	
+	new->next = NULL;
 	return (new);
 }
-

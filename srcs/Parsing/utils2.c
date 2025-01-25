@@ -16,10 +16,9 @@ t_redirection	*get_redirection(char *cmd)
 {
 	t_redirection	*current;
 	int				i;
-	
+
 	current = NULL;
 	i = 0;
-	//printf("cmd dans get_redirec: %s\n", cmd);
 	while (cmd[i])
 	{
 		if (cmd[i] == '<' || cmd[i] == '>')
@@ -36,13 +35,8 @@ t_redirection	*get_redirection(char *cmd)
 		if (cmd[i] && cmd[i] != '<' && cmd[i] != '>')
 			i++;
 	}
-	//printf("payload1:%s\n", current->payload);
-	//if (current->next)
-	//	printf("YA UN TRUC SA MERE\n");
-	//printf("done get_redirection\n");
 	return (current);
 }
-
 
 char	*ft_strcat(char *dest, const char *src)
 {
@@ -51,60 +45,29 @@ char	*ft_strcat(char *dest, const char *src)
 
 	i = 0;
 	while (dest[i])
-		i++; // Localise la fin de dest
+		i++;
 	j = 0;
 	while (src[j])
 	{
 		dest[i + j] = src[j];
 		j++;
 	}
-	dest[i + j] = '\0'; // Ajoute le caractère nul
+	dest[i + j] = '\0';
 	return (dest);
 }
-
-
-/*char	*ft_triming(char *cmd)
-{
-	char	*res;
-	int	i;
-
-	i = 0;
-	res = malloc(sizeof(char) * ft_strlen(cmd));
-	while (res[i])
-	{
-		if (is_in_quotes(cmd, i) != 0)
-		{
-			
-		
-		}
-	}
-	res = ft_strtrim(cmd, " ");
-	return (res);
-}*/
 
 char	*remove_quotes(char *prompt)
 {
 	char	*res;
-	int	i;
-	int	j;
-	int	quote_count;
-	int	in_quotes;
-	
-	i = 0;
+	int		i;
+	int		j;
+	int		in_quotes;
+
 	j = 0;
 	in_quotes = 0;
-	quote_count = 0;
-	while (prompt[i])
-	{
-		if (prompt[i] == '\'' || prompt[i] == '\"')
-			quote_count++;
-		i++;
-	}
 	res = malloc(sizeof(char) * (ft_strlen(prompt) + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (prompt[i])
+	i = -1;
+	while (prompt[++i])
 	{
 		if ((prompt[i] == '\'' || prompt[i] == '\"') && in_quotes == 0)
 			in_quotes = prompt[i];
@@ -112,7 +75,6 @@ char	*remove_quotes(char *prompt)
 			in_quotes = 0;
 		else
 			res[j++] = prompt[i];
-		i++;
 	}
 	res[j] = '\0';
 	return (res);
@@ -131,13 +93,13 @@ char	*trim_quote(char *tmp)
 
 char	*get_command(char *cmd, int *i, t_env *env)
 {
-	int	j;
+	int		j;
 	char	*res;
 	char	*tmp;
+
 	(void)env;
 	res = NULL;
 	tmp = NULL;
-
 	while (cmd[*i] && ft_isspace(cmd[*i]) == 1)
 		(*i)++;
 	j = (*i);
@@ -161,7 +123,7 @@ char	*get_command(char *cmd, int *i, t_env *env)
 char	**get_option(char *cmd, int *i, t_env *env)
 {
 	char	**res;
-	int	j;
+	int		j;
 	char	*trim;
 
 	(void)env;
@@ -177,8 +139,5 @@ char	**get_option(char *cmd, int *i, t_env *env)
 	if (trim[*i])
 		res = ft_split(&trim[*i], ' ');
 	free(trim);
-	//while (res[++j])
-	//	res[j] = handle_expand(res[j], env);
 	return (res);
-
 }

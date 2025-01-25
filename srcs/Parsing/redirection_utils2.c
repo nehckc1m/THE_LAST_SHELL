@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	trim_payload_quotes(char *option)
 {
 	int	i;
@@ -20,7 +19,6 @@ void	trim_payload_quotes(char *option)
 
 	state = 0;
 	i = 0;
-	//printf("dans trim_payload\n");
 	while (option[i])
 	{
 		state = is_in_quotes(option, i);

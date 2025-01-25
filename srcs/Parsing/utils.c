@@ -95,8 +95,6 @@ char	*get_env_value(char **env, char *var)
 int	alloc_size(char *str, t_env *env)
 {
 	int		i;
-	//char	*env_var_value;
-	//char	*word;
 	int		size;
 
 	size = 0;
@@ -107,9 +105,9 @@ int	alloc_size(char *str, t_env *env)
 		{
 			if (str[i + 1] == '?' && is_in_quotes(str, i) != 1)
 				search_exit_status_alloc(env, &i, &size);
-			else 
+			else
 				ft_expand_alloc(env, &i, &size, str);
-		}	
+		}
 		else
 			size++;
 		i++;
@@ -122,15 +120,12 @@ char	*handle_expand(char *prompt, t_env *env)
 	char	*res;
 	int		i;
 	int		j;
+	char	*word;
+	char	*env_var_value;
 
-	i = 0;
 	j = 0;
-	if (!prompt)
-		return (NULL);
-	res = malloc(sizeof(char) * alloc_size(prompt, env) + 1);
-	if (!res)
-		return (NULL);
 	i = 0;
+	res = malloc(sizeof(char) * alloc_size(prompt, env) + 1);
 	ft_memset(res, 0, alloc_size(prompt, env) + 1);
 	while (prompt[i])
 	{
@@ -139,7 +134,23 @@ char	*handle_expand(char *prompt, t_env *env)
 			if (prompt[i + 1] == '?' && is_in_quotes(prompt, i) != 1)
 				search_exit_status(env, &i, &j, &res);
 			else
-				ft_expand(&res, env, &i, &j, prompt);
+			{
+				word = extract_word(&prompt[i + 1]);
+				if (word)
+				{
+					env_var_value = get_env_value(env->env, word);
+					if (env_var_value)
+					{
+						res = ft_strcat(res, env_var_value);
+						j += ft_strlen(env_var_value);
+						i += ft_strlen(word);
+						free(env_var_value);
+					}
+					else
+						i += ft_strlen(word);
+					free(word);
+				}
+			}
 		}
 		else
 			res[j++] = prompt[i];

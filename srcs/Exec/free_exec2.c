@@ -86,9 +86,7 @@ void	replace_abs_path(char	**str, t_env_list **env)
 	char	*new_val;
 
 	new_val = NULL;
-/*	if (*str && *str[0] == '.')
-		new_val = ft_strjoin(find_elmt(env, "PWD")->val, *str + 1);
-	else */if (*str && *str[0] == '~')
+	if (*str && *str[0] == '~')
 		new_val = ft_strjoin(find_elmt(env, "HOME")->val, *str + 1);
 	if (new_val)
 	{
