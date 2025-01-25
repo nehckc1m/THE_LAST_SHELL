@@ -26,7 +26,6 @@ t_redirection	*get_redirection(char *cmd)
 		{
 			if (is_in_quotes(cmd, i) == 0)
 			{
-				printf("izi\n");
 				current = redirection_list_add_back(current, \
 						redirection_list_new_node());
 				i += fill_redirection(current, &cmd[i]);
@@ -115,15 +114,20 @@ char	*remove_quotes(char *prompt)
 			res[j++] = prompt[i];
 		i++;
 	}
-	/*if (j < (int)(ft_strlen(prompt) - quote_count))
-		res[j] = '\0';
-	else*/
 	res[j] = '\0';
-	//free(prompt);
-	printf("res:%s\n",res);
 	return (res);
 }
 
+char	*trim_quote(char *tmp)
+{
+	char	*trim;
+	char	*res;	
+
+	trim = ft_strtrim(tmp, " ");
+	res = remove_quotes(trim);
+	free(trim);
+	return (res);
+}
 
 char	*get_command(char *cmd, int *i, t_env *env)
 {
@@ -134,7 +138,6 @@ char	*get_command(char *cmd, int *i, t_env *env)
 	res = NULL;
 	tmp = NULL;
 
-	printf("cmd dans get command:%s\n",cmd);
 	while (cmd[*i] && ft_isspace(cmd[*i]) == 1)
 		(*i)++;
 	j = (*i);
@@ -144,14 +147,13 @@ char	*get_command(char *cmd, int *i, t_env *env)
 	{
 		j = has_quote(cmd, j);
 		tmp = ft_substr(cmd, (*i), j + 1);
-		//printf("cmd dans get command:%s\n",tmp);
 		res = remove_quotes(tmp);
 		(*i) = j;
 		free(tmp);
 		return (res);
 	}
 	tmp = ft_substr(cmd, (*i), j);
-	res = remove_quotes(tmp);
+	res = trim_quote(tmp);
 	free(tmp);
 	return (res);
 }
@@ -160,17 +162,21 @@ char	**get_option(char *cmd, int *i, t_env *env)
 {
 	char	**res;
 	int	j;
+	char	*trim;
+
 	(void)env;
 	j = -1;
 	res = NULL;
-	if ((size_t)(*i) == ft_strlen(cmd))
+	trim = remove_quotes(cmd);
+	if ((size_t)(*i) == ft_strlen(trim))
 		return (NULL);
-	while (cmd[*i] && ft_isspace(cmd[*i]) == 0)
+	while (trim[*i] && ft_isspace(trim[*i]) == 0)
 		(*i)++;
-	while (cmd[*i] && ft_isspace(cmd[*i]) == 1)
+	while (trim[*i] && ft_isspace(trim[*i]) == 1)
 		(*i)++;
-	if (cmd[*i])
-		res = ft_split(&cmd[*i], ' ');
+	if (trim[*i])
+		res = ft_split(&trim[*i], ' ');
+	free(trim);
 	//while (res[++j])
 	//	res[j] = handle_expand(res[j], env);
 	return (res);

@@ -45,7 +45,7 @@
 # define ERR_CMD_NOT_FOUND	" : command not found\n"
 
 //		global var//
-extern int			g_exit_status;
+extern volatile int			g_exit_status;
 
 typedef struct s_env_list
 {
@@ -109,6 +109,8 @@ typedef struct s_exec_list
 //ft_expand.c
 void	ft_expand(char **res, t_env *env, int *i, int *j, char *prompt);
 void	ft_expand_alloc(t_env *env, int *i, int *j, char *str);
+void	search_exit_status_alloc(t_env *env, int *i, int *j);
+void	search_exit_status(t_env *env, int *i, int *j, char **res);
 //signal_handler.c
 void	signal_listener(int sig_state);
 

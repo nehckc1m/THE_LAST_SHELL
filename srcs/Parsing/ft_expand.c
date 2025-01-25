@@ -12,6 +12,53 @@
 
 #include "minishell.h"
 
+void	search_exit_status_alloc(t_env *env, int *i, int *j)
+{
+	char	*value;
+	
+	if (g_exit_status > 0)
+	{
+		value = ft_itoa(g_exit_status);
+		*j += ft_strlen(value);
+		*i += 2;
+		free(value);
+	}
+	else
+	{
+		value = ft_itoa(env->last_status);
+		*j += ft_strlen(value);
+		*i += 2;
+		free(value);
+	}
+
+}
+
+
+void	search_exit_status(t_env *env, int *i, int *j, char **res)
+{
+	char	*value;
+	
+	if (g_exit_status > 0)
+	{
+		value = ft_itoa(g_exit_status);
+		*res = ft_strcat(*res, value);
+		*j += ft_strlen(value);
+		*i += 2;
+		g_exit_status = 0;
+		free(value);
+	}
+	else
+	{
+		value = ft_itoa(env->last_status);
+		*res = ft_strcat(*res, value);
+		*j += ft_strlen(value);
+		*i += 2;
+		free(value);
+	}
+
+}
+
+
 void	ft_expand(char **res, t_env *env, int *i, int *j, char *prompt)
 {
 	char	*word;
@@ -24,7 +71,6 @@ void	ft_expand(char **res, t_env *env, int *i, int *j, char *prompt)
 		if (env_var_value)
 		{
 			*res = ft_strcat(*res, env_var_value);
-			printf("zizi:%s\n", *res);
 			*j += ft_strlen(env_var_value);
 			*i += ft_strlen(word);
 			free(env_var_value);

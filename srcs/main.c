@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	g_exit_status;
+volatile int	g_exit_status;
 
 static int	parsing_prompt(char *prompt, t_env *env);
 
@@ -59,6 +59,7 @@ int	read_prompt(t_env *env)
 		{
 			free_env(env);
 			free_readline();
+			//free(prompt);
 			free_all_exit(NULL, env->head, -1);
 			del_curr_heredoc();
 			printf("exit\n");
@@ -68,13 +69,17 @@ int	read_prompt(t_env *env)
 		{
 			add_history(prompt);
 			if (parsing_prompt(prompt, env) == 0)
+			{
 				printf("syntax error\n");
+				rl_replace_line("", 1);
+				rl_redisplay();
+			}
 		}
 		free(prompt);
 	}
 }
 
-void	print_command_list(t_exec *command)
+/*void	print_command_list(t_exec *command)
 {
 	int i = -1;
 	while (command)
@@ -90,7 +95,7 @@ void	print_command_list(t_exec *command)
 		command = command->next;
 	}
 	printf("print cmmand list done\n");
-}
+}*/
 
 static int	parsing_prompt(char *prompt, t_env *env)
 {
@@ -100,7 +105,7 @@ static int	parsing_prompt(char *prompt, t_env *env)
 	if (check_syntax(prompt))
 		return (0);
 	command_list = split_prompt(prompt, '|', env);
-	print_command_list(command_list);
+	//print_command_list(command_list);
 	if (check_payload(&command_list), 0)
 	{
 		free_exec_list(&command_list);
@@ -123,11 +128,8 @@ int	main(int ac, char **av, char **envp)
 		perror("too much args for minishell!");
 		return (0);
 	}
-	//init_shell(shell);
-	//printf("zizi\n");
 	if (copy_env(&env, envp) == 0)
 		return (0);
-	//printf("zizi2\n");
 	read_prompt(&env);
 	return (g_exit_status);
 }

@@ -104,7 +104,12 @@ int	alloc_size(char *str, t_env *env)
 	while (str[i])
 	{
 		if (str[i] == '$' && is_in_quotes(str, i) != 1)
-			ft_expand_alloc(env, &i, &size, str);
+		{
+			if (str[i + 1] == '?' && is_in_quotes(str, i) != 1)
+				search_exit_status_alloc(env, &i, &size);
+			else 
+				ft_expand_alloc(env, &i, &size, str);
+		}	
 		else
 			size++;
 		i++;
@@ -130,7 +135,12 @@ char	*handle_expand(char *prompt, t_env *env)
 	while (prompt[i])
 	{
 		if (prompt[i] == '$' && is_in_quotes(prompt, i) != 1)
-			ft_expand(&res, env, &i, &j, prompt);
+		{
+			if (prompt[i + 1] == '?' && is_in_quotes(prompt, i) != 1)
+				search_exit_status(env, &i, &j, &res);
+			else
+				ft_expand(&res, env, &i, &j, prompt);
+		}
 		else
 			res[j++] = prompt[i];
 		i++;
