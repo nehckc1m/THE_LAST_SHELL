@@ -76,7 +76,6 @@ void	trim_redirections(char **line)
 	{
 		if ((*line)[i] == '>' || (*line)[i] == '<')
 		{
-			printf("%c\n", (*line)[i]);
 			(*line)[i] = '\0';
 			(*line)[i + 1] = '\0';
 		}

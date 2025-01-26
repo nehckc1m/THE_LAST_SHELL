@@ -14,6 +14,7 @@ SRCS =		srcs/main.c \
 		srcs/Parsing/utils2.c \
 		srcs/Parsing/utils3.c \
 		srcs/Parsing/redirection_list.c \
+		srcs/Parsing/init_expand.c \
 		srcs/Parsing/redirection_utils.c \
 		srcs/Parsing/redirection_utils2.c \
 		srcs/Parsing/ft_free.c \

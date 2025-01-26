@@ -31,10 +31,7 @@ t_redirection	*redirection_list_last(t_redirection *lst)
 	t_redirection	*last;
 
 	if (!lst)
-	{
-		printf("RIEN\n");
 		return (NULL);
-	}
 	last = lst;
 	while (last->next != NULL)
 		last = last->next;
@@ -50,9 +47,6 @@ t_redirection	*redirection_list_add_back(t_redirection *exec, \
 	if (last)
 		last->next = neww;
 	else
-	{
-		printf("ouais\n");
 		exec = neww;
-	}
 	return (exec);
 }

@@ -105,13 +105,13 @@ typedef struct s_exec_list
 }				t_exec_list;
 
 //ft_expand.c
-void						ft_expand(char **res, char **env_var_value, int *i, int *j);
+void						ft_expand(char **res, char **env_var_value, \
+							int *i, int *j);
 void						ft_expand_alloc(t_env *env, int *i, \
 						int *j, char *str);
 void						search_exit_status_alloc(t_env *env, \
 						int *i, int *j);
-void						search_exit_status(t_env *env, int *i, \
-						int *j, char **res);
+void						search_exit_status(t_env *env, int *i, char **res);
 //signal_handler.c
 void						signal_listener(int sig_state);
 
@@ -120,7 +120,12 @@ t_env						*list_env(char **env);
 //t_env	*export_env(t_shell *shell, char **env_var);
 void						free_env_list(t_env *env_list);
 void						print_list(t_env *list_env);
-//commands.c
+//	init_expand.c
+void						if_word(char **res, int *i, char *word, t_env *env);
+void						if_expand(char **res, char *prompt, \
+							int *i, t_env *env);
+char						*ft_strcat_char(char *dest, char c);
+char						*ft_strcat(char *dest, const char *src);
 //void	commands(t_shell *shell);
 
 /*	split_prompt.c	*/

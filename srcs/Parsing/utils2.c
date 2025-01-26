@@ -38,24 +38,6 @@ t_redirection	*get_redirection(char *cmd)
 	return (current);
 }
 
-char	*ft_strcat(char *dest, const char *src)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (dest[i])
-		i++;
-	j = 0;
-	while (src[j])
-	{
-		dest[i + j] = src[j];
-		j++;
-	}
-	dest[i + j] = '\0';
-	return (dest);
-}
-
 char	*remove_quotes(char *prompt)
 {
 	char	*res;
@@ -83,7 +65,7 @@ char	*remove_quotes(char *prompt)
 char	*trim_quote(char *tmp)
 {
 	char	*trim;
-	char	*res;	
+	char	*res;
 
 	trim = ft_strtrim(tmp, " ");
 	res = remove_quotes(trim);
@@ -123,15 +105,16 @@ char	*get_command(char *cmd, int *i, t_env *env)
 char	**get_option(char *cmd, int *i, t_env *env)
 {
 	char	**res;
-	int		j;
 	char	*trim;
 
 	(void)env;
-	j = -1;
 	res = NULL;
 	trim = remove_quotes(cmd);
-	if ((size_t)(*i) == ft_strlen(trim))
+	if (ft_strcmp(trim, "\0") == 0)
+	{
+		free(trim);
 		return (NULL);
+	}
 	while (trim[*i] && ft_isspace(trim[*i]) == 0)
 		(*i)++;
 	while (trim[*i] && ft_isspace(trim[*i]) == 1)

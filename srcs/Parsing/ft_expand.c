@@ -20,19 +20,19 @@ void	search_exit_status_alloc(t_env *env, int *i, int *j)
 	{
 		value = ft_itoa(g_exit_status);
 		*j += ft_strlen(value);
-		*i += 2;
+		*i += 1;
 		free(value);
 	}
 	else
 	{
 		value = ft_itoa(env->last_status);
 		*j += ft_strlen(value);
-		*i += 2;
+		*i += 1;
 		free(value);
 	}
 }
 
-void	search_exit_status(t_env *env, int *i, int *j, char **res)
+void	search_exit_status(t_env *env, int *i, char **res)
 {
 	char	*value;
 
@@ -40,8 +40,7 @@ void	search_exit_status(t_env *env, int *i, int *j, char **res)
 	{
 		value = ft_itoa(g_exit_status);
 		*res = ft_strcat(*res, value);
-		*j += ft_strlen(value);
-		*i += 2;
+		*i += 1;
 		g_exit_status = 0;
 		free(value);
 	}
@@ -49,8 +48,7 @@ void	search_exit_status(t_env *env, int *i, int *j, char **res)
 	{
 		value = ft_itoa(env->last_status);
 		*res = ft_strcat(*res, value);
-		*j += ft_strlen(value);
-		*i += 2;
+		*i += 1;
 		free(value);
 	}
 }
