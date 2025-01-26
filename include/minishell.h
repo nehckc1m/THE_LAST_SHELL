@@ -147,7 +147,7 @@ int							is_in_quotes(char *cmd, int i);
 int							has_quote(char *prompt, int j);
 char						*handle_expand(char *prompt, t_env *env);
 //               utils2.c
-char						*get_command(char *cmd, int *i, t_env *env);
+char						*get_command(char *cmd, int *i);
 char						**get_option(char *cmd, int *i, t_env *env);
 char						*ft_strcat(char *dest, const char *src);
 t_redirection				*get_redirection(char *cmd);

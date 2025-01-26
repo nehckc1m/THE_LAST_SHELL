@@ -56,8 +56,11 @@ void	free_exec_list(t_exec **exec)
 	{
 		nav = (*exec)->next;
 		free_redirection_list(&(*exec)->redirection_list);
-		free((*exec)->cmd);
-		(*exec)->cmd = NULL;
+		if ((*exec) != NULL && (*exec)->cmd != NULL)
+		{
+			free((*exec)->cmd);
+			(*exec)->cmd = NULL;
+		}
 		i = 0;
 		if ((*exec)->option)
 			while ((*exec)->option[i])

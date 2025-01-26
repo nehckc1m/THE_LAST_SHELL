@@ -12,38 +12,16 @@
 
 #include "libft.h"
 
-static int	trimer(char c, const char *set);
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	s1_len;
 
 	i = 0;
-	j = ft_strlen(s1);
-	if (!s1)
-		return (NULL);
-	if (!set)
-		return (NULL);
-	while (trimer(s1[i], set) == 0)
+	s1_len = ft_strlen(s1);
+	while (s1[i] && ft_strchr(set, s1[i]))
 		i++;
-	while (trimer (s1[j - 1], set) == 0)
-		j--;
-	return (ft_substr(s1, i, j - i));
-}
-
-static int	trimer(char c, const char *set)
-{
-	int		i;
-
-	i = 0;
-	while (set[i])
-	{
-		if (c == set[i])
-		{
-			return (0);
-		}
-		i++;
-	}
-	return (1);
+	while (s1_len >= 0 && ft_strchr(set, s1[s1_len]))
+		s1_len--;
+	return (ft_substr(s1, i, s1_len - i + 1));
 }

@@ -48,8 +48,8 @@ char	*remove_quotes(char *prompt)
 	j = 0;
 	in_quotes = 0;
 	res = malloc(sizeof(char) * (ft_strlen(prompt) + 1));
-	i = -1;
-	while (prompt[++i])
+	i = 0;
+	while (prompt[i])
 	{
 		if ((prompt[i] == '\'' || prompt[i] == '\"') && in_quotes == 0)
 			in_quotes = prompt[i];
@@ -57,6 +57,7 @@ char	*remove_quotes(char *prompt)
 			in_quotes = 0;
 		else
 			res[j++] = prompt[i];
+		i++;
 	}
 	res[j] = '\0';
 	return (res);
@@ -73,15 +74,12 @@ char	*trim_quote(char *tmp)
 	return (res);
 }
 
-char	*get_command(char *cmd, int *i, t_env *env)
+char	*get_command(char *cmd, int *i)
 {
 	int		j;
 	char	*res;
 	char	*tmp;
 
-	(void)env;
-	res = NULL;
-	tmp = NULL;
 	while (cmd[*i] && ft_isspace(cmd[*i]) == 1)
 		(*i)++;
 	j = (*i);
@@ -97,7 +95,10 @@ char	*get_command(char *cmd, int *i, t_env *env)
 		return (res);
 	}
 	tmp = ft_substr(cmd, (*i), j);
-	res = trim_quote(tmp);
+	if (tmp[0] != '\0')
+		res = trim_quote(tmp);
+	else
+		res = ft_strdup("");
 	free(tmp);
 	return (res);
 }

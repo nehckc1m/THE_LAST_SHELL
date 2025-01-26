@@ -56,8 +56,6 @@ int	check_pipes(char *prompt)
 	i = 0;
 	while (prompt[i] && ft_isspace(prompt[i]) == 1)
 		i++;
-	if (prompt[i] == '\0')
-		return (0);
 	if (prompt[i] && prompt[i] == '|' && is_in_quotes(prompt, i) == 0)
 		return (0);
 	i = ft_strlen(prompt) - 1;
@@ -91,7 +89,9 @@ int	check_quotes(char *prompt)
 int	check_syntax(char *prompt)
 {
 	if (check_pipes(prompt) == 0)
+	{
 		return (1);
+	}
 	if (check_space_between_pipes(prompt) == 0)
 		return (1);
 	if (check_quotes(prompt) == 1)
